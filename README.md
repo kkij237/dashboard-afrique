@@ -1,4 +1,4 @@
-# Sprint S2 - Dashboard Analytique Streamlit 
+# Dashboard Analytique Streamlit 
 
 Ce projet est un tableau de bord interactif développé avec Python, Streamlit et Plotly. Il permet d'explorer les indicateurs socio-économiques (Population, Consommation, Énergie) de 54 pays africains
 
