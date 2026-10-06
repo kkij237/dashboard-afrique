@@ -2,10 +2,10 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-# 1. Configuration de la page (Critère : Compatible mobile / layout wide)
+#  Configuration de la page (Critère : Compatible mobile / layout wide)
 st.set_page_config(page_title="Dashboard Afrique - Sprint S2", layout="wide", page_icon="🌍")
 
-# 2. Chargement des données optimisé (Critère : Chargement < 5 secondes)
+#  Chargement des données optimisé (Critère : Chargement < 5 secondes)
 @st.cache_data
 def load_data():
     df = pd.read_csv('dataset_afrique.csv')
@@ -40,7 +40,7 @@ st.sidebar.caption("Source des données : Banque Mondiale / ONU")
 st.title("🌍 Analyse des Indicateurs Socio-Économiques en Afrique")
 st.markdown("Ce dashboard interactif explore les relations entre la démographie, la consommation et l'énergie à travers le continent africain.")
 
-st.header("1. Vue d'ensemble")
+st.header("Vue d'ensemble")
 col1, col2, col3 = st.columns(3)
 
 with col1:
@@ -60,7 +60,7 @@ col_gauche, col_droite = st.columns(2)
 
 with col_gauche:
     # VISUALISATION 1 : Analyse temporelle (Plotly Line)
-    st.header("2. Analyse Temporelle")
+    st.header("Analyse Temporelle")
     st.write("Évolution de la population au fil du temps par région.")
     df_region_pop = df_historique.groupby(['Annee', 'Region'])['Population'].sum().reset_index()
     fig1 = px.line(df_region_pop, x='Annee', y='Population', color='Region', markers=True, 
@@ -68,7 +68,7 @@ with col_gauche:
     st.plotly_chart(fig1, use_container_width=True)
 
     # VISUALISATION 3 : Corrélations (Scatter Plot)
-    st.header("4. Corrélations")
+    st.header("Corrélations")
     st.write("Lien entre Consommation et Énergie par habitant.")
     fig3 = px.scatter(df_filtre, x='Consommation_Par_Habitant', y='Energie_Par_Habitant', 
                       color='Region', hover_name='Code_Pays', size='Population',
@@ -77,7 +77,7 @@ with col_gauche:
 
 with col_droite:
     # VISUALISATION 2 : Comparaison géographique (Carte Choroplèthe)
-    st.header("3. Comparaison Géographique")
+    st.header("Comparaison Géographique")
     st.write("Répartition de la consommation par habitant sur la carte.")
     # Les codes ISO-3 de la Banque Mondiale fonctionnent nativement avec Plotly !
     fig2 = px.choropleth(df_filtre, locations='Code_Pays', color='Consommation_Par_Habitant',
@@ -86,7 +86,7 @@ with col_droite:
     st.plotly_chart(fig2, use_container_width=True)
 
     # VISUALISATION 4 : Distribution (Box Plot)
-    st.header("5. Distribution")
+    st.header("Distribution")
     st.write("Dispersion de la consommation par habitant selon les régions.")
     fig4 = px.box(df_filtre, x='Region', y='Consommation_Par_Habitant', color='Region',
                   title=f"Distribution de la consommation par région ({annee_selection})")
@@ -94,7 +94,7 @@ with col_droite:
 
 # VISUALISATION 5 : Top 10 (Bar Chart) exigé en complément
 st.markdown("---")
-st.header("6. Top 10 des pays")
+st.header("Top 10 des pays")
 st.write("Les 10 pays avec la plus forte consommation par habitant pour l'année sélectionnée.")
 top_10 = df_filtre.nlargest(10, 'Consommation_Par_Habitant')
 fig5 = px.bar(top_10, x='Code_Pays', y='Consommation_Par_Habitant', color='Region', text_auto='.2s',
